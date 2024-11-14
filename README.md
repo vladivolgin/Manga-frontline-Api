@@ -54,25 +54,25 @@ curl "http://127.0.0.1:8000/api/v1/manga/{manga_id}" (You can get manga id by se
 ## Project Structure
 ```
 manga_api/
-├── app/                      # Main application package
+├── app/                        # Main application package
 │   ├── init.py
-│   ├── main.py               # Entry point of the application
-│   ├── config.py             # Configuration settings
-│   ├── api/                  # API routes
+│   ├── main.py                 # Entry point of the application
+│   ├── config.py               # Configuration settings 
+│   ├── api/                    # API routes
 │   │   ├── init.py
-│   │   └── manga.py          # Manga-related endpoints
-│   ├── services/             # Business logic
+│   │   └── manga.py            # Manga-related endpoints
+│   ├── services/               # Business logic
 │   │   ├── init.py
-│   │   └── mangadex.py       # MangaDex API interaction
-│   └── models/               # Data models
+│   │   └── mangadex.py         # MangaDex API interaction
+│   └── models/                 # Data models
 │       ├── init.py
-│       └── manga.py          # Manga data models
-├── tests/                    # Test directory
+│       └── manga.py            # Manga data models
+├── tests/                      # Test directory
 │   ├── init.py
-│   ├── test_manga_api.py     # API tests
-│   └── test_mangadex_service.py  # Service tests
-├── .env                      # Environment variables (not in version control)
-└── requirements.txt          # Project dependencies
+│   ├── test_manga_api.py       # API tests
+│   └── test_mangadex_service.py    # Service tests
+├── .env                        # Environment variables (not in version control)
+└── requirements.txt            # Project dependencies
 ```
 
 ## Code Analysis and Quality Tools
