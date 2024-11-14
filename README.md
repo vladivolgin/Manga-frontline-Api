@@ -43,7 +43,7 @@ python -m app.main or python3 -m app.main
 ### Searching for manga
 
 To search for manga by title, send a GET request to `/api/v1/search` with the `title` query parameter:
-curl "http://127.0.0.1:8000/api/v1/search?title=<title>
+curl "http://127.0.0.1:8000/api/v1/search?title=<title>"
 (Some examples of Manga titles: 'One Piece', 'Naruto', 'Berserk')
 
 ### Retrieving manga details
