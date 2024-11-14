@@ -52,6 +52,7 @@ To get detailed information about a specific manga, send a GET request to `/api/
 curl "http://127.0.0.1:8000/api/v1/manga/{manga_id}" (You can get manga id by searching manga with the name of title)
 
 ## Project Structure
+```
 manga_api/
 │
 ├── app/
@@ -73,3 +74,15 @@ manga_api/
 │   └── test_mangadex_service.py
 ├── .env
 └── requirements.txt
+```
+
+## Code Analysis and Quality Tools
+
+This project uses the following tools to maintain code quality:
+
+- **Pytest**: For unit and integration testing. Run tests with `pytest tests/`.
+- **Flake8**: For style guide enforcement. Run with `flake8 .`.
+- **Black**: For code formatting. Run with `black .`.
+
+To run all quality checks, you can use the following command:
+pytest tests/ && flake8 . && black --check .
