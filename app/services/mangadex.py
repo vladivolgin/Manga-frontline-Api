@@ -3,6 +3,7 @@ from typing import List, Dict, Any, Optional
 import requests
 from app.config import settings
 from app.models.manga import MangaInfo, MangaSearchResult
+from pydantic import BaseModel
 
 class MangaDexService:
     @staticmethod
@@ -27,23 +28,37 @@ class MangaDexService:
             raise
 
     @staticmethod
-    def search_manga_by_title(title: str) -> List[Dict]:
+    def search_manga_by_title(title: str) -> Dict:
         url = f"{settings.MANGADEX_API_URL}/manga"
         params = {"title": title, "limit": 5, "order[relevance]": "desc"}
         try:
             response = requests.get(url, params=params)
-            response.raise_for_status()
-            data = response.json()
-            return data.get('data', [])  
+            response.raise_for_status()      
+            return response.json()
         except requests.exceptions.RequestException as e:
-            logging.error(f"Error searching manga: {e}")
+            logging.error(f"Error searching manga: {e}", exc_info=True)
             raise
 
+    @staticmethod
+    def parse_manga_search_results(data: List[Dict]) -> List[MangaSearchResult]:
+        manga_list = data.get("data", [])
+        logging.info(f"Parsing {len(manga_list)} manga results")
+        results = []
+        for manga in manga_list:
+            try:
+                result = MangaSearchResult(
+                    id=manga.get("id"),
+                    title=manga.get("attributes", {}).get("title", {}).get("en", "No title available"),
+                    original_language=manga.get("attributes", {}).get("originalLanguage", "N/A")
+                )
+                results.append(result)
+            except Exception as e:
+                logging.error(f"Error parsing manga data: {e}", exc_info=True)
+        logging.info(f"Successfully parsed {len(results)} manga results")
+        return results
 
     @staticmethod
     def parse_manga_info(data: dict) -> MangaInfo:
-        if data is None:
-            return None  
         manga_data = data.get("data", {})
         attributes = manga_data.get("attributes", {})
         return MangaInfo(
@@ -56,14 +71,7 @@ class MangaDexService:
             original_language=attributes.get("originalLanguage")
         )
 
-    @staticmethod
-    def parse_manga_search_results(data: dict) -> List[MangaSearchResult]:
-        manga_list = data.get("data", [])
-        return [
-            MangaSearchResult(
-                id=manga.get("id"),
-                title=manga.get("attributes", {}).get("title", {}).get("en", "No title available"),
-                original_language=manga.get("attributes", {}).get("originalLanguage", "N/A")
-            )
-            for manga in manga_list
-        ]
+class MangaSearchResult(BaseModel):
+    id: str
+    title: str
+    original_language: str

@@ -3,7 +3,6 @@ import logging
 from typing import List
 import requests
 from app.services.mangadex import MangaDexService
-from app.models.manga import MangaInfo
 from app.models.manga import MangaInfo, MangaSearchResult
 
 router = APIRouter()
@@ -34,9 +33,9 @@ def get_manga_info(manga_id: str):
 @router.get("/search", response_model=List[MangaSearchResult])
 def search_manga(title: str = Query(..., description="Manga Title for searching")):
     try:
-        search_result = MangaDexService.search_manga_by_title(title)
-        if not search_result:
-            return []
-        return MangaDexService.parse_manga_search_results(search_result)
+        search_results = MangaDexService.search_manga_by_title(title)
+        parsed_results = MangaDexService.parse_manga_search_results(search_results)
+        return parsed_results
     except Exception as e:
+        logging.error(f"Error searching manga: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error searching manga: {str(e)}")
