@@ -49,4 +49,27 @@ curl "http://127.0.0.1:8000/api/v1/search?title=<title>
 ### Retrieving manga details
 
 To get detailed information about a specific manga, send a GET request to `/api/v1/manga/{manga_id}`:
-curl "http://127.0.0.1:8000/api/v1/manga/{manga_id}"
+curl "http://127.0.0.1:8000/api/v1/manga/{manga_id}" (You can get manga id by searching manga with the name of title)
+
+## Project Structure
+manga_api/
+│
+├── app/
+│   ├── init.py
+│   ├── main.py
+│   ├── config.py
+│   ├── api/
+│   │   ├── init.py
+│   │   └── manga.py
+│   ├── services/
+│   │   ├── init.py
+│   │   └── mangadex.py
+│   └── models/
+│       ├── init.py
+│       └── manga.py
+├── tests/
+│   ├── init.py
+│   ├── test_manga_api.py
+│   └── test_mangadex_service.py
+├── .env
+└── requirements.txt
