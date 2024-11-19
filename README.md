@@ -11,16 +11,19 @@ This project is a FastAPI-based wrapper for the MangaDex API, allowing users to 
 
 ## Setup and Installation
 
-### Prerequisites
+### on local
+
+#### Prerequisites
 
 - Python 3.7+
 - pip (Python package manager)
 
-### Setting up the development environment
+#### Setting up the development environment
 
 1. Clone the repository:
 
 git clone https://github.com/vladivolgin/Manga-frontline-Api
+
 
 2. Create a virtual environment:
 ```
@@ -30,13 +33,29 @@ python -m venv venv
 ```
 pip install -r requirements.txt or pip3 install -r requirements.txt
 ```
-### Running the application
+#### Running the application
 
 1. Start the FastAPI server:
 ```
 python -m app.main or python3 -m app.main
 ```
 2. Open your web browser and navigate to `http://127.0.0.1:8000/docs` to view the Swagger UI documentation and interact with the API.
+
+### on Docker
+
+this repository include `./Dockerfile` and `./docker-compose.yml` to run API server on docker container. you can start it on this command.
+(if error, please check `./env` and required variable is sufficienty provided)
+
+```
+docker compose up fastapi
+```
+
+or you can exec python command as following:
+
+```
+docker compose exec fastapi pytest
+```
+
 
 ## Usage
 
@@ -62,7 +81,7 @@ manga_api/
 ├── app/                        # Main application package
 │   ├── init.py
 │   ├── main.py                 # Entry point of the application
-│   ├── config.py               # Configuration settings 
+│   ├── config.py               # Configuration settings
 │   ├── api/                    # API routes
 │   │   ├── init.py
 │   │   └── manga.py            # Manga-related endpoints
