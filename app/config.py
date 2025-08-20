@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
+    ENV: str = 'local'
     MANGADEX_API_URL: str = "https://api.mangadex.org"
     AUTH_URL: str = "https://auth.mangadex.org/realms/mangadex/protocol/openid-connect/token"
     API_V1_STR: str = "/api/v1"
